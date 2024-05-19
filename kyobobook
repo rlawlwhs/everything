@@ -1,0 +1,52 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+
+from pyvirtualdisplay import Display
+
+import time
+from datetime import datetime
+
+
+display = Display(visible=0, size=(1024, 768))
+display.start()
+
+print(datetime.now().strftime("%Y-%m-%d"))
+
+print("Display Success")
+
+try:
+    service =webdriver.ChromeService(executable_path='/usr/bin/chromedriver')
+
+    driver = webdriver.Chrome(service=service)
+
+    driver.get("https://mmbr.kyobobook.co.kr/")
+
+    id_box = driver.find_element(By.CLASS_NAME, "id").find_element(By.TAG_NAME, "input")
+    id_box.send_keys("")
+
+    pw_box = driver.find_element(By.CLASS_NAME, "pw").find_element(By.TAG_NAME, "input")
+    pw_box.send_keys("")
+
+    login_btn = driver.find_element(By.ID, "loginBtn")
+    if login_btn != None:
+        login_btn.click()
+
+    print("LoginSuccess")
+
+    time.sleep(5)
+
+    driver.get("https://event.kyobobook.co.kr/attendance") 
+
+    time.sleep(5)
+
+    check_btn = driver.find_element(By.CLASS_NAME, "btn_attendance")
+    check_btn.click()
+
+    time.sleep(5)
+
+    print("All Done")
+except:
+    print("Check Error")
+
+
+
